@@ -1,5 +1,7 @@
 #!/bin/bash
 
+IP_LAN=("192.168.7.0/24" "192.168.0.0/24" "192.168.2.0/24" "192.168.4.0/24" "192.168.6.0/24")
+
 # Install chrony
 sudo apt-get update
 sudo apt-get install chrony -y
@@ -32,13 +34,12 @@ maxupdateskew 100.0
 
 rtcsync
 
-makestep 1 3
+makestep 1 3'
 
-allow 192.168.7.0/24
-allow 192.168.0.0/24
-allow 192.168.2.0/24
-allow 192.168.4.0/24
-allow 192.168.6.0/24' | sudo tee -a /etc/chrony/chrony.conf	
+# Add IP_LAN to chrony configuration
+for ip in "${IP_LAN[@]}"; do
+    echo "allow $ip" | sudo tee -a /etc/chrony/chrony.conf
+done
 
 sudo service chrony restart
 
@@ -93,8 +94,8 @@ EOF
 # Install paket rabbitmq
 apt install rabbitmq-server -y
 
-# Tambahkan user openstack
-rabbitmqctl add_user openstack admin123
+# Tambahkan user dan password openstack
+rabbitmqctl add_user openstack admin123 
 
 # set permission
 rabbitmqctl set_permissions openstack ".*" ".*" ".*"
