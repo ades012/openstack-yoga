@@ -64,7 +64,7 @@ character-set-server = utf8' | sudo tee -a /etc/mysql/mariadb.conf.d/99-openstac
 service mysql restart
 
 # amankan service database, masukan password utk root
-MYSQL_ROOT_PASSWORD="admin123" # ganti dengan password root yang diinginkan
+MYSQL_ROOT_PASSWORD="admin123"
 
 echo "NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
 SERVERS IN PRODUCTION USE! PLEASE READ EACH STEP CAREFULLY!"
@@ -103,7 +103,7 @@ rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 apt install memcached python3-memcache
 
 # edit file /etc/memcached.conf
-sed -i "s/-l 127.0.0.1/-l 192.168.7.252/g" /etc/memcached.conf
+sed -i "s/-l 127.0.0.1/-l 192.168.7.101/g" /etc/memcached.conf
 
 # restart service
 service memcached restart
@@ -117,11 +117,11 @@ ETCD_NAME="controller"
 ETCD_DATA_DIR="/var/lib/etcd"
 ETCD_INITIAL_CLUSTER_STATE="new"
 ETCD_INITIAL_CLUSTER_TOKEN="etcd-cluster-01"
-ETCD_INITIAL_CLUSTER="controller=http://192.168.7.252:2380"
-ETCD_INITIAL_ADVERTISE_PEER_URLS="http://192.168.7.252:2380"
-ETCD_ADVERTISE_CLIENT_URLS="http://192.168.7.252:2379"
+ETCD_INITIAL_CLUSTER="controller=http://192.168.7.101:2380"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="http://192.168.7.101:2380"
+ETCD_ADVERTISE_CLIENT_URLS="http://192.168.7.101:2379"
 ETCD_LISTEN_PEER_URLS="http://0.0.0.0:2380"
-ETCD_LISTEN_CLIENT_URLS="http://192.168.7.252:2379"
+ETCD_LISTEN_CLIENT_URLS="http://192.168.7.101:2379"
 EOT
 
 # enable dan restart service etcd
